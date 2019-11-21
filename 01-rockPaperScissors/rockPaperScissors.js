@@ -18,7 +18,12 @@
 */
 
 var rockPaperScissors = function (arg = 3) {
+  let rps = ["rock", "paper", "scissors"];
+  // 아 잘안되네....
+}
   // TODO: your solution here
+
+  /*
   let rps = ["rock", "paper", "scissors"];
   let result = [];
  
@@ -46,6 +51,7 @@ var rockPaperScissors = function (arg = 3) {
 
   let temp = [];
   let realnum = arg;
+
   function changeArr(target, num) {
     
     let aaa = Object.keys(target);
@@ -62,11 +68,11 @@ var rockPaperScissors = function (arg = 3) {
         let test = temp.splice(0,realnum);
 
         result.push(test)
-        console.log(test);
+       
         if (test.length === realnum) {
           for (let i=0; i<realnum-2; i=i+1) {
             temp.push(test[i])
-            
+            console.log(temp)
           }  
         }
         else {
@@ -79,6 +85,7 @@ var rockPaperScissors = function (arg = 3) {
   changeArr(first, arg)
   return result;
 }
+*/
 
 
   /*
