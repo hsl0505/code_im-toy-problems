@@ -18,11 +18,27 @@
 */
 
 var rockPaperScissors = function (arg = 3) {
-  let rps = ["rock", "paper", "scissors"];
-  // 아 잘안되네....
-}
-  // TODO: your solution here
+  let result = [];
 
+  let rps = ["rock", "paper", "scissors"];
+  
+  let temp = [];
+
+  function recursion(target) {
+    for (let i=0; i<rps.length; i=i+1) {
+      temp.push(rps[i])
+    }
+  }
+
+
+
+
+
+  return result;
+}
+
+  // TODO: your solution here
+  
   /*
   let rps = ["rock", "paper", "scissors"];
   let result = [];
@@ -35,57 +51,54 @@ var rockPaperScissors = function (arg = 3) {
   
   let first = new Node();
 
-  function recursion(num, target) {  // 3, first
+  function makeTree(num, target) { 
     if (num !== 1) {
       for (let key in target) {
         target[key] = new Node();
         let newtarget = target[key]
         let newnum = num -1;
-        recursion(newnum, newtarget)
+        makeTree(newnum, newtarget)
       }
     }
   }
 
-  recursion(arg, first)
-  console.log(first)
-
+  makeTree(arg, first)
+  
   let temp = [];
-  let realnum = arg;
+  
 
-  function changeArr(target, num) {
-    
-    let aaa = Object.keys(target);
-    for (let i=0; i<aaa.length; i=i+1) { 
+  function recursion(target) {
+    let subkeys = Object.keys(target);  // [r, p ,s]
+    let addTarget = subkeys[0];  // "r"
+
+    temp.push(addTarget);  // ["r", ]
+
+    if (target[addTarget] === null ) {
+      result.push(temp)
+      temp = [];
+      delete target[addTarget]
+      let newTarget = first;
       
-      temp.push(aaa[i])
-      let newtarget = target[aaa[i]];
-      let newnum = num - 1;
-
-      if (newnum !== 0) {
-        changeArr(newtarget, newnum)
+      if (Object.keys(newTarget).length !== 0) {
+        recursion(newTarget)
       }
-      else {
-        let test = temp.splice(0,realnum);
+      
+    }
+    else {
+      let newTarget = target[addTarget]
+      recursion(newTarget)
+    }
 
-        result.push(test)
-       
-        if (test.length === realnum) {
-          for (let i=0; i<realnum-2; i=i+1) {
-            temp.push(test[i])
-            console.log(temp)
-          }  
-        }
-        else {
-            temp.push(test[0])
-        }
-      }
-    } 
+    
+   
   }
   
-  changeArr(first, arg)
+  recursion(first);
+
+
   return result;
-}
-*/
+} */
+
 
 
   /*
