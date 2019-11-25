@@ -28,7 +28,7 @@ Array.prototype.isSubsetOf = function(array){
 
   for (let i=0; i<this.length; i=i+1) {    //extra credit ->  레퍼런스 타입 문제
 
-    if (typeof (this[i]) === "object") {
+    if (typeof (this[i]) === "object" || Array.isArray(this[i])) {
       let temp = false;
       for (let j=0; j<array.length; j=j+1) {
         if (JSON.stringify(array[j]) === JSON.stringify(this[i])) {
@@ -38,18 +38,6 @@ Array.prototype.isSubsetOf = function(array){
       if (temp === false) {
         return false
       }
-    }
-    else if (Array.isArray(this[i])) {
-      let temp = false;
-      for (let j=0; j<array.length; j=j+1) {
-        if (JSON.stringify(array[j]) === JSON.stringify(this[i])) {
-          temp = true;
-        }
-      }
-      if (temp === false) {
-        return false;
-      }
-
     }
     else {
       if (array.includes(this[i])) {
