@@ -4,7 +4,7 @@
  *
  * For example, the first five Fibonacci numbers are:
  *
- *   0 1 1 2 3
+ *   0 1 / 1 2 3 5
  *
  * If n were 4, your function should return 3; for 5, it should return 5.
  *
@@ -22,6 +22,23 @@
 
 var nthFibonacci = function (n) {
   // TODO: implement me!
+  
+  let arr = [0, 1];
+  
+  if (n === 0) {
+    return arr[0]
+  }
+  if (n === 1) {
+    return arr[1]
+  }
+  else { // n = 5라고 가정
+    for (let i=0; i<=n-2; i=i+1) {
+      let temp = arr[i] + arr[i+1];
+      arr.push(temp)
+    }
+    return arr[n]
+  }
+  
 };
 
 
