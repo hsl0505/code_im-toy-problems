@@ -34,4 +34,33 @@
 
 var bubbleSort = function(array) {
   // Your code here.
+  let result = [];
+
+  function recursion(arr) {              // [2,1,3]
+
+    let min = Math.min.apply(null, arr);  // 1
+
+    for (let i=0; i<arr.length; i=i+1) {
+      if (arr[i] === min) {         // 1번 인덱스
+        let temp = arr.splice(i,1);  // [2,3]
+        arr.unshift(temp[0])         // [1,2,3]            
+        break;
+      }
+    }
+    
+    result.push(arr[0]);             // [1]
+    arr.shift();                     // [2,3]
+
+    if (arr.length === 1) {          
+      result.push(arr[0])
+    }
+
+    if (arr.length !==1) {    
+      recursion(arr)
+    }
+  }
+  
+  recursion(array)
+
+  return result;
 };
