@@ -12,4 +12,34 @@
 
 var commonCharacters = function(string1, string2) {
   // TODO: Your code here!
+  
+
+  let splitArr = [];
+  for (let i=1; i<arguments.length; i=i+1) {
+    splitArr.push(arguments[i].split(''))
+  }
+
+  let result = [];
+
+  for (let i=0; i<arguments[0].length; i=i+1) {
+    let count = 0;
+    for (let j=0; j<splitArr.length; j=j+1) {
+      if ((splitArr[j].includes(arguments[0][i]))) {
+        count++;
+      }
+      if (count === arguments.length -1) {
+        result.push(arguments[0][i])
+      }
+    }
+  }
+  
+  return result.join('')
+  
+  /*
+  for (let i=0; i<string1.length; i=i+1) {
+    if (arrSting2.includes(string1[i])) {
+      result.push(string1[i])
+    }
+  }
+  */
 };

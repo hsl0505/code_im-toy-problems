@@ -40,7 +40,7 @@ var bubbleSort = function(array) {
 
     let min = Math.min.apply(null, arr);  // 1
 
-    for (let i=0; i<arr.length; i=i+1) {
+    for (let i=0; i<arr.length; i=i+1) {          // 시간복잡도는 처음에 n을 돌고 그다음 n-1을 돌고 그다음 n-2 ........,3,2,1를 돌아서 O(n^2)
       if (arr[i] === min) {         // 1번 인덱스
         let temp = arr.splice(i,1);  // [2,3]
         arr.unshift(temp[0])         // [1,2,3]            
