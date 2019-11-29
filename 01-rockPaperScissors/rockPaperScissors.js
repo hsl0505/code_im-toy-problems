@@ -17,38 +17,122 @@
 *
 */
 
-var rockPaperScissors = function (arg = 3) {
+var rockPaperScissors = function (arg) {
+  if (arguments.length === 0) {
+    arg = 3;
+  }
   
+  let rps = ["rock", "paper", "scissors"];
+
+  let result = [];
+
+  let temp = new Array(arg);
+
+  function recursion(num, arr, depth) {
+    let count = num;
+    let newDepth = depth;
+
+    for (let i=0; i<rps.length; i=i+1) {
+      arr[-count+newDepth] = rps[i]; 
+      let newCount = count -1;
+
+      if (newCount !== 0) {
+        let newArr = arr.slice();
+        recursion(newCount, newArr, newDepth)
+      }
+      else if (newCount === 0) {
+        result.push(arr.slice())
+        arr.pop();
+      }
+    }
+  }
+
+  recursion(arg, temp, arg)
+
+  return result;
 }
   /*
-  let result = [];  // 최종 결과를 담을 배열
+  function recursion(num) {   // 3시작
+    let count = num;   // 3
+    debugger;
+    console.log(result)
+    console.log(temp)
+    for(let i=0; i<rps.length; i=i+1) {
+      temp.push(rps[i])     //[r]
+      console.log(result)
+      console.log(temp)
+      let newCount = count -1; // 3 -> 2
 
-  let rps = ["rock", "paper", "scissors"]; // rps 배열
-  
-  function Tree(value) {  // 트리구조로 만들꺼임
-    this.value = value;
-    this.children = [];
-  }
-
-  Tree.prototype.addchild = function(val) { // 트리구조를 만들기 위한 메소드
-    this.children.push(new Tree(val))
-  }
-
-  let tree = new Tree();  // 초기 트리 설정
-
-  function makeTree(target, num) {   // 트리를 만들어줌 -> 갯수만큼 트리 깊이가 깊어짐
-    let count = num; // 3
-    for (let i=0; i<rps.length; i=i+1) {
-      target.addchild(rps[i])
-      let newCount = count -1;
-      let newTarget = target.children[i];
-      if (newCount !==0) {
-        makeTree(newTarget, newCount)
+      if (newCount !== 0) {
+        recursion(newCount)   
       }
-    } 
+      else {  // 3 ~ -> 0
+        if (temp[temp.length-1] !== "scissors") {  // 3-1 =2 -> temp[2] temp의 마지막이 가위아닐 경우// 이걸로 하면안돼
+          console.log(result)
+          console.log(temp)
+          result.push(temp.slice())
+          temp.pop();
+          console.log(result)
+          console.log(temp)
+        }
+        else { // temp[2] , temp의 마지막이 가위일 경우
+          console.log(result)
+          console.log(temp)
+          result.push(temp.slice()) // 일단 찍어올리고    
+          console.log(result)
+          console.log(temp)
+
+          let cal = arg-temp.lastIndexOf("scissors");
+          if (temp.lastIndexOf("scissors") === arg-1) {
+
+            // for (let i=0; i<=cal; i=i+1) {  // arg = 3일때 -> 1(2번팝), arg =4 -> 2 (2번팝), -> 1(3번팝), arg =5 -> 3 (2번팝), ->2(3번팝), ->1 (4번팝)
+            //   temp.pop();  // 마지막 가위 인덱스에 따라 팝 갯수 지정
+            //   console.log(result)
+            //   console.log(temp)
+            //}
+          }
+          else if (temp.lastIndexOf("scissors") !== arg-1) {
+            function index(target) {
+              if (target.slice(0,-1).indexOf("scissors") === target.slice(0,-1).length-1) {
+                let cal = arg-temp.indexOf("scissors")
+                for (let i=0; i<cal; i=i+1) {  // arg = 3일때 -> 1(2번팝), arg =4 -> 2 (2번팝), -> 1(3번팝), arg =5 -> 3 (2번팝), ->2(3번팝), ->1 (4번팝)
+                  temp.pop();  // 마지막 가위 인덱스에 따라 팝 갯수 지정
+                  console.log(result)
+                  console.log(temp)
+                }
+              }
+              else {
+                let newTarget = target.slice(0,-1);
+                index(newTarget)
+              }
+            }
+
+            for (let i=0; i<cal; i=i+1) {  // arg = 3일때 -> 1(2번팝), arg =4 -> 2 (2번팝), -> 1(3번팝), arg =5 -> 3 (2번팝), ->2(3번팝), ->1 (4번팝)
+              temp.pop();  // 마지막 가위 인덱스에 따라 팝 갯수 지정
+              console.log(result)
+              console.log(temp)
+            }
+          }
+
+          console.log(result)
+          console.log(temp)
+        }
+      }
+      console.log(result)
+      console.log(temp)
+      if (count === arg) {
+        temp = [];
+      }
+    }
+
   }
 
-  makeTree(tree, arg)  // 갯수만큼 깊이를 가진 트리 생성
+  recursion(arg)
+  
+  return result;
+} */
+  /*
+
 
   let temp = [];  // 최종결과에 하나하나 들어갈 임시 배열
   let depthclear = arg;
