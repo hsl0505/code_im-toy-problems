@@ -16,7 +16,7 @@ var commonCharacters = function(string1, string2) {
 
   let splitArr = [];
   for (let i=1; i<arguments.length; i=i+1) {
-    splitArr.push(arguments[i].split(''))
+    splitArr.push(arguments[i].split(' ').join('').split(''))
   }
 
   let result = [];
@@ -24,7 +24,7 @@ var commonCharacters = function(string1, string2) {
   for (let i=0; i<arguments[0].length; i=i+1) {
     let count = 0;
     for (let j=0; j<splitArr.length; j=j+1) {
-      if ((splitArr[j].includes(arguments[0][i]))) {
+      if ((splitArr[j].includes(arguments[0][i])) && !(result.includes(arguments[0][i]))) {
         count++;
       }
       if (count === arguments.length -1) {
