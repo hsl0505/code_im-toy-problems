@@ -33,7 +33,7 @@ var rockPaperScissors = function (arg) {
     let newDepth = depth;
 
     for (let i=0; i<rps.length; i=i+1) {
-      arr[-count+newDepth] = rps[i]; 
+      arr[-count+newDepth] = rps[i];   
       let newCount = count -1;
 
       if (newCount !== 0) {

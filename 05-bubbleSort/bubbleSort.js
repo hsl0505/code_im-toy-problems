@@ -34,6 +34,35 @@
 
 var bubbleSort = function(array) {
   // Your code here.
+
+  // 시간 복잡도
+  // 시작은 처음부터 n번 비교, n-1번 비교, n-2번 비교, ........ 2번 비교, 1번 비교 -> n*n-1*n-2........2*1 = n(n-1)/2 = O(n^2)
+  // 평균 : O(n^2), worst : O(n^2), best : O(n^2)
+  // 즉, 어떤 경우든 for문을 2번 다 돌기 때문에 항상 O(n^2)의 시간복잡도를 갖는다
+  // 최적화 가능!!
+  // -> 값을 비교하여 자리를 교환할 때 카운트가 올라가게 해놓고, 만약 카운트가 하나도 올라가지않는다면 정렬이 이미 완료 된 것으로 판단하고 그상태에서 바로 결과 반환
+  // best : O(n) -> 들어온 배열이 이미 오름차순으로 정렬이 되어 있는 경우
+
+  for (let j=0; j<array.length; j=j+1) {
+    let count = 0; // 초기 카운트
+    for (let i=0; i<array.length; i=i+1) {
+      if (array[i] >= array[i+1] && array[i+1] !== undefined) {
+        let temp = array.slice(i+1, i+2)[0];
+        array[i+1] = array.slice(i, i+1)[0];
+        array[i] = temp;
+        count++; // 교환이 일어날때마다 카운트가 올라감
+      }
+    }
+    if (count ===0) { // 교환이 일어나지않았다 = 이미 정렬이 다 되어 있다 -> 이 상태의 array를 바로 반환해도됨!!
+      break;
+    }
+  }
+
+  return array
+
+
+  /*  원래의 버블정렬이 아님!!
+
   let result = [];
 
   function recursion(arr) {              // [2,1,3]
@@ -63,4 +92,5 @@ var bubbleSort = function(array) {
   recursion(array)
 
   return result;
+  */
 };
