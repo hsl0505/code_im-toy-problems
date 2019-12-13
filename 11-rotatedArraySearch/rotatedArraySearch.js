@@ -28,12 +28,7 @@ var rotatedArraySearch = function (rotated, target) {  // 3,4,5,6,0,1,2       6,
     }
     
     if (dif > 0) { // 1 -> 2가나옴
-      if (rotated[0] < rotated[1]) {
-        return rotated.length-dif
-      }
-      else {  // 1 -> 5가 나옴
-        return rotated.length-dif
-      }
+      return rotated.length-dif
     }
     else if (dif < 0) { // 6 -> -3
       if (rotated[0] < rotated[1]) {
