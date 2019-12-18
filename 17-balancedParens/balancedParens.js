@@ -23,7 +23,38 @@
  *
  *
  */
-var balancedParens = function(input){
+var balancedParens = function(input) {
+  //   let splitInput = input.split("");
+
+  function calculator(inputstr) {
+    if (input === "") {
+      return true;
+    }
+    let leftCount = 0;
+    let rightCount = 0;
+    for (let i = 0; i < inputstr.length; i++) {
+      if (inputstr[i] === "(") {
+        leftCount = leftCount + 1;
+      } else if (inputstr[i] === ")") {
+        rightCount = rightCount + 1;
+      }
+    }
+    if (leftCount === 0 && rightCount === 0) {
+      return true;
+    }
+    if (leftCount !== rightCount) {
+      return false;
+    } else {
+      let leftIndex = inputstr.indexOf("(");
+      let rightIndex = inputstr.lastIndexOf(")");
+      if (leftIndex > rightIndex) {
+        return false;
+      }
+      inputstr.splice(leftIndex, 1);
+      inputstr.splice(rightIndex, 1);
+      calculator(inputstr);
+    }
+  }
+
+  return calculator(input);
 };
-
-

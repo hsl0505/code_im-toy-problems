@@ -18,4 +18,5 @@
  */
 
 var powerSet = function(str){
+    //
 }

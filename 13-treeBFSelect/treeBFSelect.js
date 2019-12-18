@@ -39,6 +39,12 @@ var Tree = function(value){
 
 Tree.prototype.BFSelect = function(filter) {
   // return an array of values for which the function filter(value, depth) returns true
+  let result = [];
+
+  function recursion () {
+    
+  }
+  return result
 };
 
 /**

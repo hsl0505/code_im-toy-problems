@@ -33,7 +33,15 @@
 
 'use strict';
 
-var compose = function(){
+var compose = function(...arg) {   // welcome("asdfds") = compose(greet, exclaim)("safdsfd")
+ debugger;
+  return function(target) {
+      let result;
+      let temp = arg.slice().reverse().reduce(function(acc, cur) {
+      return result = acc(target);
+    })
+    return result;
+  }
 };
 
 var pipe = function(){
