@@ -38,13 +38,10 @@ var Tree = function(value) {
 Tree.prototype.BFSelect = function(filter) {
   // return an array of values for which the function filter(value, depth) returns true
   let result = [];
-  // console.log(filter);
-  function recursion(target, depth, first) {
-    //this, 트루필터, false
 
-    // console.log(filter);
+  function recursion(target, depth, first) {
+    //
     function getValue(cb, tg, dp) {
-      // console.log(tg.value, cb(tg.value, dp));
       if (cb(tg.value, dp)) {
         return tg.value;
       }
@@ -70,7 +67,7 @@ Tree.prototype.BFSelect = function(filter) {
     }
   }
 
-  recursion(this, 0, false);
+  recursion(this, 0, false); // 루트에서 시작한다고 보고... 뎁스 0으로 입력함... 각 트리에서는..좀 다를수도
   return result;
 };
 
