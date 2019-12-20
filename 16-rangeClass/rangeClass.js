@@ -38,18 +38,69 @@
  * evenNumbers.includes(2) should be true, evenNumbers.includes(3) should be false
  */
 
-
 var Range = function(start, end, step) {
+  this.start = `${start}`;
+  this.end = `${end}`;
+  // strat 만 들어왔을 경우
+  if (arguments.length === 1) {
+    this[start] = start;
+  }
+  // start와 end만 들어왔을 경우
+  else if (arguments.length === 2) {
+    //
+    if (start <= end) {
+      for (let i = start; i <= end; i++) {
+        this[i] = i;
+      }
+    }
+    //
+    else {
+      for (let i = start; i >= end; i--) {
+        this[i] = i;
+      }
+    }
+  }
+  // 3개 다 들어왔을 경우
+  else {
+    //
+    if (start <= end) {
+      for (let i = start; i <= end; i = i + step) {
+        this[i] = i;
+      }
+    }
+    //
+    else {
+      for (let i = start; i >= end; i = i + step) {
+        this[i] = i;
+      }
+    }
+  }
 };
 
-Range.prototype.size = function () {
+Range.prototype.size = function() {
+  return Object.keys(this).length - 2;
 };
 
-Range.prototype.each = function (callback) {
+Range.prototype.each = function(callback) {
+  if (this.end === "undefined") {
+    callback(Number(this.start));
+  } else {
+    let vals = Object.values(this).filter(ele => typeof ele === "number");
+    if (Number(this.start) <= Number(this.end)) {
+      vals.forEach(ele => callback(ele));
+    } else {
+      vals.reverse().forEach(ele => callback(ele));
+    }
+  }
 };
 
-Range.prototype.includes = function (val) {
+Range.prototype.includes = function(val) {
+  let vals = Object.values(this);
+  if (vals.includes(val)) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 var range = new Range(1);
-
