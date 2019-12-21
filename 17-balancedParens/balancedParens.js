@@ -24,37 +24,34 @@
  *
  */
 var balancedParens = function(input) {
-  //   let splitInput = input.split("");
-
-  function calculator(inputstr) {
-    if (input === "") {
-      return true;
-    }
-    let leftCount = 0;
-    let rightCount = 0;
-    for (let i = 0; i < inputstr.length; i++) {
-      if (inputstr[i] === "(") {
-        leftCount = leftCount + 1;
-      } else if (inputstr[i] === ")") {
-        rightCount = rightCount + 1;
-      }
-    }
-    if (leftCount === 0 && rightCount === 0) {
-      return true;
-    }
-    if (leftCount !== rightCount) {
-      return false;
+  let splitStr = input.split("");
+  let small = splitStr.filter(ele => ele === "(");
+  let smallRev = splitStr.filter(ele => ele === ")");
+  // if (small.length === 0 && smallRev.length === 0) {
+  //     return true
+  // }
+  if (small.length !== smallRev.length) {
+    return false;
+  } else {
+    let smallArr = splitStr.filter(ele => ele === "(" || ele === ")");
+  }
+  // [(]{)} 이게 문제임
+  function isBalanceSmall(target, count) {
+    let temp = target.join("").split("()");
+    let temp2 = temp.filter(ele => ele !== "()");
+    let newCount = count - 1;
+    if (count !== 0) {
+      let newTarget = temp2;
+      return isBalanceSmall(newTarget, newCount);
     } else {
-      let leftIndex = inputstr.indexOf("(");
-      let rightIndex = inputstr.lastIndexOf(")");
-      if (leftIndex > rightIndex) {
+      if (temp2.length !== 0) {
         return false;
+      } else {
+        return true;
       }
-      inputstr.splice(leftIndex, 1);
-      inputstr.splice(rightIndex, 1);
-      calculator(inputstr);
     }
   }
 
-  return calculator(input);
+  let midlle = splitStr.filter(ele => ele === "{");
+  let large = splitStr.filter(ele => ele === "[");
 };

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /* Implement the function asyncMap:
  *
@@ -38,6 +38,18 @@
  *
  */
 
+var asyncMap = function(tasks, callback) {
+  //   let result = [];
 
-var asyncMap = function(tasks, callback){
+  //   function cb(target) {
+  //     target.push(result);
+  //   }
+
+  let promiseArr = [];
+
+  for (let i = 0; i < tasks.length; i++) {
+    promiseArr.push(new Promise(tasks[i]));
+  }
+
+  return Promise.all(promiseArr).then(result => callback(result));
 };
