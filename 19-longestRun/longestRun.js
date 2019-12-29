@@ -29,6 +29,7 @@ var longestRun = function(string) {
     obj.char = string[i];
     obj.count = obj.count + 1;
     if (string[i] !== string[i + 1]) {
+      obj.lastIdx = i;
       arr.push(obj);
       obj = {
         char: "",
@@ -47,10 +48,7 @@ var longestRun = function(string) {
 
   for (let i = 0; i < arr.length; i++) {
     if (arr[i]["count"] === maxNum) {
-      return [
-        string.indexOf(arr[i]["char"]),
-        string.lastIndexOf(arr[i]["char"])
-      ];
+      return [arr[i]["lastIdx"] - arr[i]["count"] + 1, arr[i]["lastIdx"]];
     }
   }
 };

@@ -33,13 +33,27 @@
 
 var shuffleDeck = function(deck) {
   // Your code here
+  let result = [];
+  let values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
+  let suits = ["♥", "♣", "♠", "♦"];
+
+  let shu = values.sort((a, b) => Math.random() - 0.5);
+  let shuSuit = suits.sort((a, b) => Math.random() - 0.5);
+
+  shuSuit.forEach(suit => {
+    shu.forEach(value => {
+      result.push(value + suit);
+    });
+  });
+
+  return result;
 };
 
 // Ordered deck generator provided for your testing convenience
 // (You may alter this function, but an unaltered copy will be used for tests.)
 var orderedDeck = function() {
-  var suits = [ '♥', '♣', '♠', '♦' ];
-  var values = [ 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K' ];
+  var suits = ["♥", "♣", "♠", "♦"];
+  var values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
   var deck = [];
 
   suits.forEach(function(suit) {

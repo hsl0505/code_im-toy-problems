@@ -30,10 +30,11 @@
  *
  *   Done! Return the sorted array:
  *   [1,2,3,4,4,7,9]
+ *
  * Illustration of a recursive approach:
  *
  *   1. Split the input array in half
- *   [4, 7, 4, 3, 9, 1, 2] -> [4, 7, 4], [3, 9, 1, 2
+ *   [4, 7, 4, 3, 9, 1, 2] -> [4, 7, 4], [3, 9, 1, 2]
  *
  *   2. Both sides are sorted recursively:
  *   [4, 7, 4] -> [4, 4, 7]
@@ -81,8 +82,14 @@
  *   complexity is (spoiler alert!) much lower. Why is that?
  *
  *
- * Extra credit:
- *   One of the benefits of mergesort over e.g. quicksort is that it is "stable"; assuming the merge
+ * Extra credit:  function divideArr(arr) {
+    let tempArr = divideHelper(arr)
+    if (tempArr[0].length !==1) {
+      for (let i=0; i<tempArr.length; i++) {
+        
+      }
+    }
+  }
  *   step is properly implemented, list items with the same value will remain in the same order they were
  *   in in the input. (This is academic in the case of sorting integers, but it is an important consideration
  *   when sorting more complex objects.) Is your implementation a stable sort?
@@ -95,8 +102,175 @@
  *
  */
 
-
-
 var mergeSort = function(array) {
   // Your code here.
+  // 합병정렬
+
+  // 제로초님
+  // var devide = function(array) {
+  //   if (array.length < 2) return array; // 원소가 하나일 때는 그대로 내보냅니다.
+  //   var pivot = Math.floor(array.length / 2); // 대략 반으로 쪼개는 코드
+  //   var left = array.slice(0, pivot); // 쪼갠 왼쪽
+  //   var right = array.slice(pivot, array.length); // 쪼갠 오른쪽
+  //   return merge(devide(left), devide(right)); // 재귀적으로 쪼개고 합칩니다.
+  // };
+
+  // function merge(left, right) {
+  //   var result = [];
+  //   while (left.length && right.length) {
+  //     if (left[0] <= right[0]) {
+  //       // 두 배열의 첫 원소를 비교하여
+  //       result.push(left.shift()); // 더 작은 수를 결과에 넣어줍니다.
+  //     } else {
+  //       result.push(right.shift()); // 오른쪽도 마찬가지
+  //     }
+  //   }
+  //   while (left.length) result.push(left.shift()); // 어느 한 배열이 더 많이 남았다면 나머지를 다 넣어줍니다.
+  //   while (right.length) result.push(right.shift()); // 오른쪽도 마찬가지
+  //   return result;
+  // }
+  // return devide(array);
+
+  // 리커젼??
+  let result;
+  if (array.length === 0) {
+    return [];
+  }
+
+  if (array.length === 1) {
+    return [array[0]];
+  }
+
+  function merge(a, b) {
+    let temp = [];
+    if (b === undefined) {
+      return a;
+    }
+    //
+    else {
+      let lengthA = a.length;
+      let lengthB = b.length;
+      for (let i = 0; i < lengthA * lengthB; i++) {
+        if (a[a.length - 1] <= b[0]) {
+          return temp.concat(a).concat(b);
+        } else if (a[0] >= b[b.length - 1]) {
+          return temp.concat(b).concat(a);
+        } else {
+          if (a[0] < b[0]) {
+            temp.push(a[0]);
+            a.shift();
+            if (a.length === 0) {
+              return temp.concat(b);
+            }
+          } else if (a[0] > b[0]) {
+            temp.push(b[0]);
+            b.shift();
+            if (b.length === 0) {
+              return temp.concat(a);
+            }
+          } else {
+            temp.push(a[0]);
+            temp.push(b[0]);
+            a.shift();
+            b.shift();
+            if (a.length === 0 && b.length === 0) {
+              return temp;
+            } else if (a.length === 0 && b.length !== 0) {
+              return temp.concat(b);
+            } else if (a.length !== 0 && b.length === 0) {
+              return temp.concat(a);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function divide(target) {
+    if (target.length !== 1) {
+      let targetIdx;
+      if (!target.length % 2) {
+        targetIdx = target.length / 2;
+      } else {
+        targetIdx = Math.ceil(target.length / 2);
+      }
+
+      let front = target.slice(0, targetIdx);
+      let back = target.slice(targetIdx);
+      return merge(divide(front), divide(back));
+    }
+    //
+    else {
+      return target;
+    }
+  }
+
+  result = divide(array);
+
+  // // 리커젼 없이
+  // let initArr = array.map(ele => [ele]);
+
+  // // helper function
+  // // 재귀로 하면 안돼!!! 멕시멈 콜스택
+  // function compare(a, b, temp) {
+  //   // debugger;
+  //   if (b === undefined) {
+  //     return a;
+  //   }
+  //   //
+  //   else {
+  //     let lengthA = a.length;
+  //     let lengthB = b.length;
+  //     for (let i = 0; i < lengthA * lengthB; i++) {
+  //       if (a[a.length - 1] <= b[0]) {
+  //         return temp.concat(a).concat(b);
+  //       } else if (a[0] >= b[b.length - 1]) {
+  //         return temp.concat(b).concat(a);
+  //       } else {
+  //         if (a[0] < b[0]) {
+  //           temp.push(a[0]);
+  //           a.shift();
+  //           if (a.length === 0) {
+  //             return temp.concat(b);
+  //           }
+  //         } else if (a[0] > b[0]) {
+  //           temp.push(b[0]);
+  //           b.shift();
+  //           if (b.length === 0) {
+  //             return temp.concat(a);
+  //           }
+  //         } else {
+  //           temp.push(a[0]);
+  //           temp.push(b[0]);
+  //           a.shift();
+  //           b.shift();
+  //           if (a.length === 0 && b.length === 0) {
+  //             return temp;
+  //           } else if (a.length === 0 && b.length !== 0) {
+  //             return temp.concat(b);
+  //           } else if (a.length !== 0 && b.length === 0) {
+  //             return temp.concat(a);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  // function merge(target) {
+  //   let arr = [];
+  //   for (let i = 0; i < target.length; i = i + 2) {
+  //     let temp = [];
+  //     arr.push(compare(target[i], target[i + 1], temp));
+  //   }
+  //   if (arr.length !== 1) {
+  //     merge(arr);
+  //   } else {
+  //     result = arr[0];
+  //   }
+  // }
+
+  // merge(initArr);
+
+  return result;
 };
