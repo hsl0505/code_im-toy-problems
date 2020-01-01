@@ -151,6 +151,7 @@ var mergeSort = function(array) {
       let lengthA = a.length;
       let lengthB = b.length;
       for (let i = 0; i < lengthA * lengthB; i++) {
+        // 각 단계의 합병은 시간 복잡도 n
         if (a[a.length - 1] <= b[0]) {
           return temp.concat(a).concat(b);
         } else if (a[0] >= b[b.length - 1]) {
@@ -190,6 +191,7 @@ var mergeSort = function(array) {
     if (target.length !== 1) {
       let targetIdx;
       if (!target.length % 2) {
+        // 단계는 시간 복잡도 logN 으로 된다
         targetIdx = target.length / 2;
       } else {
         targetIdx = Math.ceil(target.length / 2);
@@ -197,7 +199,7 @@ var mergeSort = function(array) {
 
       let front = target.slice(0, targetIdx);
       let back = target.slice(targetIdx);
-      return merge(divide(front), divide(back));
+      return merge(divide(front), divide(back)); // 여기가 핵심
     }
     //
     else {
@@ -211,7 +213,7 @@ var mergeSort = function(array) {
   // let initArr = array.map(ele => [ele]);
 
   // // helper function
-  // // 재귀로 하면 안돼!!! 멕시멈 콜스택
+  // // 하나하나 재귀로 하면 안돼!!! 멕시멈 콜스택
   // function compare(a, b, temp) {
   //   // debugger;
   //   if (b === undefined) {
