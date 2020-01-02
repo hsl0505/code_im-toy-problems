@@ -26,11 +26,13 @@ var LinkedList = function() {
 
 LinkedList.prototype.addToTail = function(data) {
   let newNode = this.makeNode(data);
-  this.tail = newNode;
+
   if (this.head === null) {
     this.head = newNode;
+    this.tail = newNode;
   } else {
-    this.head.next = newNode;
+    this.tail.next = newNode;
+    this.tail = newNode;
   }
 };
 
