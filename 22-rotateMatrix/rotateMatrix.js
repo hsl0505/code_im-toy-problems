@@ -43,14 +43,53 @@
  *  - Make your function accept a parameter for the direction of rotation (1 = clockwise, -1 = counterclockwise)
  */
 
-var rotateMatrix = function(matrix) {
+var rotateMatrix = function(matrix, direction = 1) {
   // Your code here.
-  let rowNum = matrix.length;
-  let culNum = matrix[matrix.length - 1].length;
+  if (direction === 1) {
+    let a = matrix.length; // 4
+    let b;
+    if (a !== 0) {
+      b = matrix[0].length; // 5
+    } else {
+      b = 0;
+    }
 
-  let result = [];
-  let temp = new Array(rowNum);
-  // for (let i=0; i<matrix.length; i++) {
-  //   for (let j=0;)
-  // }
+    let rotateArr = [];
+
+    let reverseMx = matrix.reverse();
+
+    for (let i = 0; i < b; i++) {
+      let temp = new Array(a);
+      for (let j = 0; j < reverseMx.length; j++) {
+        temp[j] = reverseMx[j][i];
+      }
+      rotateArr.push(temp.slice());
+    }
+
+    return rotateArr;
+  } else if (direction === -1) {
+    let a = matrix.length; // 4
+    let b;
+    if (a !== 0) {
+      b = matrix[0].length; // 5
+    } else {
+      b = 0;
+    }
+
+    let rotateArr = [];
+
+    let reverseMx = matrix;
+
+    for (let i = b - 1; i >= 0; i--) {
+      let temp = new Array(a);
+      for (let j = reverseMx.length - 1; j >= 0; j--) {
+        temp[j] = reverseMx[j][i];
+      }
+      rotateArr.push(temp.slice());
+    }
+
+    return rotateArr;
+  } else {
+    return "wrong direction!!";
+  }
 };
