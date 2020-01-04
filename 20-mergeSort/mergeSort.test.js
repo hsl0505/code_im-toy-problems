@@ -55,11 +55,12 @@ describe("mergeSort", function() {
     this.timeout(30000);
     var input = [];
     var sorted;
-    var n = 100000;
+    var n = 1000000;
     for (var i = 0; i < n; i++) {
       var number = Math.floor(Math.random() * n);
       input.push(number);
     }
+    // console.log(input);
     sorted = input.slice().sort(function(a, b) {
       return a - b;
     }); // sort numerically, not lexicographically

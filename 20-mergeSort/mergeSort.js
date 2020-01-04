@@ -106,39 +106,10 @@ var mergeSort = function(array) {
   // Your code here.
   // 합병정렬
 
-  // 제로초님
-  // var devide = function(array) {
-  //   if (array.length < 2) return array; // 원소가 하나일 때는 그대로 내보냅니다.
-  //   var pivot = Math.floor(array.length / 2); // 대략 반으로 쪼개는 코드
-  //   var left = array.slice(0, pivot); // 쪼갠 왼쪽
-  //   var right = array.slice(pivot, array.length); // 쪼갠 오른쪽
-  //   return merge(devide(left), devide(right)); // 재귀적으로 쪼개고 합칩니다.
-  // };
-
-  // function merge(left, right) {
-  //   var result = [];
-  //   while (left.length && right.length) {
-  //     if (left[0] <= right[0]) {
-  //       // 두 배열의 첫 원소를 비교하여
-  //       result.push(left.shift()); // 더 작은 수를 결과에 넣어줍니다.
-  //     } else {
-  //       result.push(right.shift()); // 오른쪽도 마찬가지
-  //     }
-  //   }
-  //   while (left.length) result.push(left.shift()); // 어느 한 배열이 더 많이 남았다면 나머지를 다 넣어줍니다.
-  //   while (right.length) result.push(right.shift()); // 오른쪽도 마찬가지
-  //   return result;
-  // }
-  // return devide(array);
-
   // 리커젼??
-  let result;
-  if (array.length === 0) {
-    return [];
-  }
 
-  if (array.length === 1) {
-    return [array[0]];
+  if (array.length < 2) {
+    return array;
   }
 
   function merge(a, b) {
@@ -150,37 +121,39 @@ var mergeSort = function(array) {
     else {
       let lengthA = a.length;
       let lengthB = b.length;
+      let aIdx = 0;
+      let bIdx = 0;
+      if (a[lengthA - 1] <= b[0]) {
+        return temp.concat(a.slice(aIdx)).concat(b.slice(bIdx));
+      } else if (a[0] >= b[lengthB - 1]) {
+        return temp.concat(b.slice(bIdx)).concat(a.slice(aIdx));
+      }
       for (let i = 0; i < lengthA * lengthB; i++) {
         // 각 단계의 합병은 시간 복잡도 n
-        if (a[a.length - 1] <= b[0]) {
-          return temp.concat(a).concat(b);
-        } else if (a[0] >= b[b.length - 1]) {
-          return temp.concat(b).concat(a);
+
+        if (a[aIdx] < b[bIdx]) {
+          temp.push(a[aIdx]);
+          aIdx++;
+          if (aIdx === lengthA) {
+            return temp.concat(b.slice(bIdx));
+          }
+        } else if (a[aIdx] > b[bIdx]) {
+          temp.push(b[bIdx]);
+          bIdx++;
+          if (bIdx === lengthB) {
+            return temp.concat(a.slice(aIdx));
+          }
         } else {
-          if (a[0] < b[0]) {
-            temp.push(a[0]);
-            a.shift();
-            if (a.length === 0) {
-              return temp.concat(b);
-            }
-          } else if (a[0] > b[0]) {
-            temp.push(b[0]);
-            b.shift();
-            if (b.length === 0) {
-              return temp.concat(a);
-            }
-          } else {
-            temp.push(a[0]);
-            temp.push(b[0]);
-            a.shift();
-            b.shift();
-            if (a.length === 0 && b.length === 0) {
-              return temp;
-            } else if (a.length === 0 && b.length !== 0) {
-              return temp.concat(b);
-            } else if (a.length !== 0 && b.length === 0) {
-              return temp.concat(a);
-            }
+          temp.push(a[aIdx]);
+          temp.push(b[bIdx]);
+          aIdx++;
+          bIdx++;
+          if (aIdx === lengthA && bIdx === lengthB) {
+            return temp;
+          } else if (aIdx === lengthA && bIdx !== lengthB) {
+            return temp.concat(b.slice(bIdx));
+          } else if (aIdx !== lengthA && bIdx === lengthB) {
+            return temp.concat(a.slice(aIdx));
           }
         }
       }
@@ -189,13 +162,7 @@ var mergeSort = function(array) {
 
   function divide(target) {
     if (target.length !== 1) {
-      let targetIdx;
-      if (!target.length % 2) {
-        // 단계는 시간 복잡도 logN 으로 된다
-        targetIdx = target.length / 2;
-      } else {
-        targetIdx = Math.ceil(target.length / 2);
-      }
+      let targetIdx = Math.floor(target.length / 2);
 
       let front = target.slice(0, targetIdx);
       let back = target.slice(targetIdx);
@@ -207,72 +174,33 @@ var mergeSort = function(array) {
     }
   }
 
+  let result;
   result = divide(array);
+  return result;
 
-  // // 리커젼 없이
-  // let initArr = array.map(ele => [ele]);
+  // // 참고용
+  // if (array.length < 2) {
+  //   return array;
+  // }
+  // const mid = Math.floor(array.length / 2);
+  // const left = array.slice(0, mid);
+  // const right = array.slice(mid);
 
-  // // helper function
-  // // 하나하나 재귀로 하면 안돼!!! 멕시멈 콜스택
-  // function compare(a, b, temp) {
-  //   // debugger;
-  //   if (b === undefined) {
-  //     return a;
-  //   }
-  //   //
-  //   else {
-  //     let lengthA = a.length;
-  //     let lengthB = b.length;
-  //     for (let i = 0; i < lengthA * lengthB; i++) {
-  //       if (a[a.length - 1] <= b[0]) {
-  //         return temp.concat(a).concat(b);
-  //       } else if (a[0] >= b[b.length - 1]) {
-  //         return temp.concat(b).concat(a);
-  //       } else {
-  //         if (a[0] < b[0]) {
-  //           temp.push(a[0]);
-  //           a.shift();
-  //           if (a.length === 0) {
-  //             return temp.concat(b);
-  //           }
-  //         } else if (a[0] > b[0]) {
-  //           temp.push(b[0]);
-  //           b.shift();
-  //           if (b.length === 0) {
-  //             return temp.concat(a);
-  //           }
-  //         } else {
-  //           temp.push(a[0]);
-  //           temp.push(b[0]);
-  //           a.shift();
-  //           b.shift();
-  //           if (a.length === 0 && b.length === 0) {
-  //             return temp;
-  //           } else if (a.length === 0 && b.length !== 0) {
-  //             return temp.concat(b);
-  //           } else if (a.length !== 0 && b.length === 0) {
-  //             return temp.concat(a);
-  //           }
-  //         }
-  //       }
+  // return merge(mergeSort(left), mergeSort(right));
+
+  // function merge(left, right) {
+  //   const resultArray = [];
+  //   let leftIndex = 0;
+  //   let rightIndex = 0;
+  //   while (leftIndex < left.length && rightIndex < right.length) {
+  //     if (left[leftIndex] < right[rightIndex]) {
+  //       resultArray.push(left[leftIndex]);
+  //       leftIndex++;
+  //     } else {
+  //       resultArray.push(right[rightIndex]);
+  //       rightIndex++;
   //     }
   //   }
+  //   return resultArray.concat(left.slice(leftIndex), right.slice(rightIndex));
   // }
-
-  // function merge(target) {
-  //   let arr = [];
-  //   for (let i = 0; i < target.length; i = i + 2) {
-  //     let temp = [];
-  //     arr.push(compare(target[i], target[i + 1], temp));
-  //   }
-  //   if (arr.length !== 1) {
-  //     merge(arr);
-  //   } else {
-  //     result = arr[0];
-  //   }
-  // }
-
-  // merge(initArr);
-
-  return result;
 };
