@@ -114,47 +114,42 @@ var mergeSort = function(array) {
 
   function merge(a, b) {
     let temp = [];
-    if (b === undefined) {
-      return a;
-    }
-    //
-    else {
-      let lengthA = a.length;
-      let lengthB = b.length;
-      let aIdx = 0;
-      let bIdx = 0;
-      if (a[lengthA - 1] <= b[0]) {
-        return temp.concat(a.slice(aIdx)).concat(b.slice(bIdx));
-      } else if (a[0] >= b[lengthB - 1]) {
-        return temp.concat(b.slice(bIdx)).concat(a.slice(aIdx));
-      }
-      for (let i = 0; i < lengthA * lengthB; i++) {
-        // 각 단계의 합병은 시간 복잡도 n
 
-        if (a[aIdx] < b[bIdx]) {
-          temp.push(a[aIdx]);
-          aIdx++;
-          if (aIdx === lengthA) {
-            return temp.concat(b.slice(bIdx));
-          }
-        } else if (a[aIdx] > b[bIdx]) {
-          temp.push(b[bIdx]);
-          bIdx++;
-          if (bIdx === lengthB) {
-            return temp.concat(a.slice(aIdx));
-          }
-        } else {
-          temp.push(a[aIdx]);
-          temp.push(b[bIdx]);
-          aIdx++;
-          bIdx++;
-          if (aIdx === lengthA && bIdx === lengthB) {
-            return temp;
-          } else if (aIdx === lengthA && bIdx !== lengthB) {
-            return temp.concat(b.slice(bIdx));
-          } else if (aIdx !== lengthA && bIdx === lengthB) {
-            return temp.concat(a.slice(aIdx));
-          }
+    let lengthA = a.length;
+    let lengthB = b.length;
+    let aIdx = 0;
+    let bIdx = 0;
+    if (a[lengthA - 1] <= b[0]) {
+      return temp.concat(a.slice(aIdx)).concat(b.slice(bIdx));
+    } else if (a[0] >= b[lengthB - 1]) {
+      return temp.concat(b.slice(bIdx)).concat(a.slice(aIdx));
+    }
+    for (let i = 0; i < lengthA * lengthB; i++) {
+      // 각 단계의 합병은 시간 복잡도 n
+
+      if (a[aIdx] < b[bIdx]) {
+        temp.push(a[aIdx]);
+        aIdx++;
+        if (aIdx === lengthA) {
+          return temp.concat(b.slice(bIdx));
+        }
+      } else if (a[aIdx] > b[bIdx]) {
+        temp.push(b[bIdx]);
+        bIdx++;
+        if (bIdx === lengthB) {
+          return temp.concat(a.slice(aIdx));
+        }
+      } else {
+        temp.push(a[aIdx]);
+        temp.push(b[bIdx]);
+        aIdx++;
+        bIdx++;
+        if (aIdx === lengthA && bIdx === lengthB) {
+          return temp;
+        } else if (aIdx === lengthA && bIdx !== lengthB) {
+          return temp.concat(b.slice(bIdx));
+        } else if (aIdx !== lengthA && bIdx === lengthB) {
+          return temp.concat(a.slice(aIdx));
         }
       }
     }
