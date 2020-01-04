@@ -33,19 +33,16 @@
 
 var shuffleDeck = function(deck) {
   // Your code here
-  let result = [];
-  let values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
-  let suits = ["♥", "♣", "♠", "♦"];
 
-  let shu = values.sort((a, b) => Math.random() - 0.5);
-  let shuSuit = suits.sort((a, b) => Math.random() - 0.5);
+  // Fisher–Yates_shuffle
+  let result = deck.slice();
+  for (let i = 0; i < result.length; i++) {
+    let randomIdx = Math.floor(Math.random() * (result.length - 1 - i)); // 으이구 멍청아
+    let temp = result.splice(randomIdx, 1, result[result.length - 1 - i])[0];
+    result.splice(result.length - 1 - i, 1);
 
-  shuSuit.forEach(suit => {
-    shu.forEach(value => {
-      result.push(value + suit);
-    });
-  });
-
+    result.push(temp);
+  }
   return result;
 };
 

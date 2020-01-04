@@ -1,19 +1,19 @@
-var should = require('should');
-var vm = require('vm');
-var fs = require('fs');
+var should = require("should");
+var vm = require("vm");
+var fs = require("fs");
 
 // if this test is being run on a server it should be ONLY to test the
 // provided solutions
-if(typeof window === 'undefined'){
+if (typeof window === "undefined") {
   // looks for a file with the same name as this one but with
   // `.test.js` replaced with `.js`
-  var filename = __filename.replace(/\.test\.js$/, '.js');
+  var filename = __filename.replace(/\.test\.js$/, ".js");
   vm.runInThisContext(fs.readFileSync(filename), filename);
 }
 
 var orderedDeck = function() {
-  var suits = [ '♥', '♣', '♠', '♦' ];
-  var values = [ 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K' ];
+  var suits = ["♥", "♣", "♠", "♦"];
+  var values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
   var deck = [];
 
   suits.forEach(function(suit) {
@@ -25,22 +25,22 @@ var orderedDeck = function() {
   return deck;
 };
 
-describe('shuffleDeck', function() {
-  it('should exist', function(){
+describe("shuffleDeck", function() {
+  it("should exist", function() {
     should.exist(shuffleDeck);
   });
 
-  it('should be a function', function() {
+  it("should be a function", function() {
     shuffleDeck.should.be.a.Function();
   });
 
-  it('should return an array', function() {
+  it("should return an array", function() {
     var result = shuffleDeck(orderedDeck());
     should.exist(result);
     result.should.be.an.instanceof(Array);
   });
 
-  it('should return an array with every card in the deck', function(){
+  it("should return an array with every card in the deck", function() {
     var input = orderedDeck();
     var control = orderedDeck();
     var result = shuffleDeck(input);
@@ -54,7 +54,7 @@ describe('shuffleDeck', function() {
     }
   });
 
-  it('should not return the deck in input order', function(){
+  it("should not return the deck in input order", function() {
     var input = orderedDeck();
     var control = orderedDeck();
     var result = shuffleDeck(input);
@@ -64,7 +64,7 @@ describe('shuffleDeck', function() {
     // (P = 1 in 52!)
   });
 
-  it('should not return the deck in the same order twice', function(){
+  it("should not return the deck in the same order twice", function() {
     var input1 = orderedDeck();
     var input2 = orderedDeck();
     var result1 = shuffleDeck(input1);
@@ -76,13 +76,13 @@ describe('shuffleDeck', function() {
     // (P = 1 in 52!)
   });
 
-  it('should not have any bias from a uniform distribution', function () {
+  it("should not have any bias from a uniform distribution", function() {
     // This one is tricky. We're going to verify that your algorithm returns a deck which "looks random".
     var deck = orderedDeck();
     // Keep a table of how often each card appears in each deck position...
     var cardPositionCounts = {};
     for (var i = 0; i < deck.length; i++) {
-      var cardPosition = cardPositionCounts[deck[i]] = {};
+      var cardPosition = (cardPositionCounts[deck[i]] = {});
       for (var j = 0; j < deck.length; j++) {
         cardPosition[j] = 0;
       }
@@ -111,15 +111,15 @@ describe('shuffleDeck', function() {
     }
     // quick and dirty statistical test:
     // if your shuffles are uniformly distributed, chi-squared should be roughly 52^2
-    chi2.should.be.approximately(52*52, 52*10);
+    chi2.should.be.approximately(52 * 52, 52 * 10);
     return chi2;
   });
 
-  it('EXTRA CREDIT: for large N, should not have any bias from a uniform distribution', function () {
+  it("EXTRA CREDIT: for large N, should not have any bias from a uniform distribution", function() {
     // We perform this test on an array of 1000 integers.
     // (Your function must shuffle an arbitrary array to pass this test.)
     // If your algorithm times out here, it is not running in linear time.
-    var orderedArray = function () {
+    var orderedArray = function() {
       var output = [];
       for (var i = 0; i < 1000; i++) {
         output.push(i);
@@ -130,7 +130,7 @@ describe('shuffleDeck', function() {
     // Keep a table of how often each integer appears in each array position...
     var cardPositionCounts = {};
     for (var i = 0; i < deck.length; i++) {
-      var cardPosition = cardPositionCounts[deck[i]] = {};
+      var cardPosition = (cardPositionCounts[deck[i]] = {});
       for (var j = 0; j < deck.length; j++) {
         cardPosition[j] = 0;
       }
@@ -159,6 +159,6 @@ describe('shuffleDeck', function() {
     }
     // quick and dirty statistical test:
     // if your shuffles are uniformly distributed, chi-squared should be roughly 1000^2
-    chi2.should.be.approximately(1000*1000, 1000*10);
+    chi2.should.be.approximately(1000 * 1000, 1000 * 10);
   });
 });
