@@ -33,7 +33,7 @@ var makeHashTable = function() {
   result.retrieve = function(key) {
     // TODO: implement `retrieve()`
     let hashingKey = getIndexBelowMaxForKey(key, storageLimit);
-    let result;
+    // let result;
     if (!storage[hashingKey]) {
       return;
     } else {
