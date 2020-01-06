@@ -107,7 +107,8 @@ var mergeSort = function(array) {
   // 합병정렬
 
   // 리커젼??
-
+  // 리펙토링 -> 배열의 length를 계속 읽는것은 참조하는 것이므로 시간이 더 걸림 !! 변수로 할당해서 사용했더니 훨씬 줄어들었따
+  // 리펙토링 -> shift 과정을 없애는 대신 인덱스를 올리는 방식으로 !! (즉 원래 배열이 임뮤터블하게 고정) , 대신 슬라이스 과정이 생겼지만.. 이정도는 굳, 컨캣은 동일
   if (array.length < 2) {
     return array;
   }
@@ -119,37 +120,38 @@ var mergeSort = function(array) {
     let lengthB = b.length;
     let aIdx = 0;
     let bIdx = 0;
-    if (a[lengthA - 1] <= b[0]) {
-      return temp.concat(a.slice(aIdx)).concat(b.slice(bIdx));
-    } else if (a[0] >= b[lengthB - 1]) {
-      return temp.concat(b.slice(bIdx)).concat(a.slice(aIdx));
-    }
+
     for (let i = 0; i < lengthA * lengthB; i++) {
       // 각 단계의 합병은 시간 복잡도 n
-
-      if (a[aIdx] < b[bIdx]) {
-        temp.push(a[aIdx]);
-        aIdx++;
-        if (aIdx === lengthA) {
-          return temp.concat(b.slice(bIdx));
-        }
-      } else if (a[aIdx] > b[bIdx]) {
-        temp.push(b[bIdx]);
-        bIdx++;
-        if (bIdx === lengthB) {
-          return temp.concat(a.slice(aIdx));
-        }
+      if (a[lengthA - 1] <= b[bIdx]) {
+        return temp.concat(a.slice(aIdx)).concat(b.slice(bIdx)); // 1,2,3,4  0,4,5,6,7
+      } else if (a[aIdx] >= b[lengthB - 1]) {
+        return temp.concat(b.slice(bIdx)).concat(a.slice(aIdx));
       } else {
-        temp.push(a[aIdx]);
-        temp.push(b[bIdx]);
-        aIdx++;
-        bIdx++;
-        if (aIdx === lengthA && bIdx === lengthB) {
-          return temp;
-        } else if (aIdx === lengthA && bIdx !== lengthB) {
-          return temp.concat(b.slice(bIdx));
-        } else if (aIdx !== lengthA && bIdx === lengthB) {
-          return temp.concat(a.slice(aIdx));
+        if (a[aIdx] < b[bIdx]) {
+          temp.push(a[aIdx]);
+          aIdx++;
+          if (aIdx === lengthA) {
+            return temp.concat(b.slice(bIdx));
+          }
+        } else if (a[aIdx] > b[bIdx]) {
+          temp.push(b[bIdx]);
+          bIdx++;
+          if (bIdx === lengthB) {
+            return temp.concat(a.slice(aIdx));
+          }
+        } else {
+          temp.push(a[aIdx]);
+          temp.push(b[bIdx]);
+          aIdx++;
+          bIdx++;
+          if (aIdx === lengthA && bIdx === lengthB) {
+            return temp;
+          } else if (aIdx === lengthA && bIdx !== lengthB) {
+            return temp.concat(b.slice(bIdx));
+          } else if (aIdx !== lengthA && bIdx === lengthB) {
+            return temp.concat(a.slice(aIdx));
+          }
         }
       }
     }
@@ -158,7 +160,7 @@ var mergeSort = function(array) {
   function divide(target) {
     if (target.length !== 1) {
       let targetIdx = Math.floor(target.length / 2);
-
+      // divide는 반씩 쪼개므로 시간복잡도는 log(n)
       let front = target.slice(0, targetIdx);
       let back = target.slice(targetIdx);
       return merge(divide(front), divide(back)); // 여기가 핵심
@@ -169,9 +171,7 @@ var mergeSort = function(array) {
     }
   }
 
-  let result;
-  result = divide(array);
-  return result;
+  return divide(array);
 
   // // 참고용
   // if (array.length < 2) {
