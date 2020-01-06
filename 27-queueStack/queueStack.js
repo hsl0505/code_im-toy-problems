@@ -52,7 +52,8 @@ var Queue = function() {
       outbox.push(inbox.pop());
     }
     let dequeuetarget = outbox.pop();
-    for (let i = 0; i < outbox.top; i++) {
+    let outboxLength = outbox.top;
+    for (let i = 0; i < outboxLength; i++) {
       inbox.push(outbox.pop());
     }
     return dequeuetarget;
