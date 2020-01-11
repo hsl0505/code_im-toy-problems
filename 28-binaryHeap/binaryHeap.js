@@ -10,7 +10,7 @@
  * parent of the 3rd and 4th nodes, and the 2nd node will be the parent of the 5th and
  * 6th nodes. In a specific kind of binary heap, the binary min heap, every node is
  * less than its immediate children:
- * 
+ *
  *          0
  *     1         2
  *   3   4     5   6
@@ -49,7 +49,6 @@
  * https://www.cs.usfca.edu/~galles/visualization/Heap.html
  */
 
-
 // Below is a binary heap whose nodes are integers. Its storage is an array and
 // its `getRoot` method is already written. `BinaryHeap`'s `this._compare` method is hard-coded to return
 // whether the fist element passed into it is less than the second. Use it when comparing nodes.
@@ -66,22 +65,82 @@
 // Extra extra credit: Implement `heapSort`. `heapSort` takes an array, constructs it into a `BinaryHeap`
 // and then iteratively returns the root of the `BinaryHeap` until its empty, thus returning a sorted array.
 
+function BinaryHeap() {
+  // 이진 힙의 핵심 인서트 / 삭제 시간복잡도 O(logn)
+  // 부모 노드와 자식 노드 찾는 로직
+  // 인서트는 부모노드와 비교하면서!!
+  // 삭제는 자식노드들과 비교하면서!!
 
-function BinaryHeap () {
   this._heap = [];
   // this compare function will result in a minHeap, use it to make comparisons between nodes in your solution
-  this._compare = function (i, j) { return i < j };
+  this._compare = function(i, j) {
+    return i < j;
+  };
 }
 
 // This function works just fine and shouldn't be modified
-BinaryHeap.prototype.getRoot = function () {
+BinaryHeap.prototype.getRoot = function() {
   return this._heap[0];
-}
+};
 
-BinaryHeap.prototype.insert = function (value) {
+BinaryHeap.prototype.insert = function(value) {
   // TODO: Your code here
-}
+  if (this._heap.length === 0) {
+    this._heap.push(value);
+  } else {
+    let insertIdx = this._heap.length;
 
-BinaryHeap.prototype.removeRoot = function () {
+    // 부모랑 비교해서 넣는 리커젼
+    function recursion(idx, target) {
+      if (idx !== 0) {
+        let parentIndex = Math.floor((idx - 1) / 2);
+
+        if (target > this._heap[parentIndex]) {
+          this._heap[idx] = target;
+        } else {
+          this._heap[idx] = this._heap[parentIndex];
+          this._heap[parentIndex] = target;
+          let newIdx = parentIndex;
+          recursion.call(this, newIdx, target);
+        }
+      }
+    }
+    // 리커젼 실행
+    recursion.call(this, insertIdx, value);
+  }
+};
+
+BinaryHeap.prototype.removeRoot = function() {
   // TODO: Your code here
-}
+  if (this._heap.length === 0) {
+    return;
+  } else {
+    let removeTarget = this._heap[0];
+    this._heap[0] = this._heap.length - 1;
+    this._heap.pop();
+
+    // 자식들 중 작은 값과 비교하는 리커젼
+    function recursion(curIdx) {
+      let childrenIndices = [curIdx * 2 + 1, curIdx * 2 + 2];
+      let curValue = this._heap[curIdx];
+      let minChildIdx;
+      if (this._heap[childrenIndices[0]] < this._heap[childrenIndices[1]]) {
+        minChildIdx = childrenIndices[0];
+      } else {
+        minChildIdx = childrenIndices[1];
+      }
+
+      if (curValue > this._heap[minChildIdx]) {
+        this._heap[curIdx] = this._heap[minChildIdx];
+        this._heap[minChildIdx] = curValue;
+        let newIdx = minChildIdx;
+        recursion.call(this, newIdx);
+      }
+    }
+
+    // 리커젼 실행
+    recursion.call(this, 0);
+
+    return removeTarget;
+  }
+};
