@@ -32,14 +32,12 @@ var evenOccurrence = function(arr) {
     }
   }
   // console.log(filterArr);
-  let result = [];
+  // let result = [];
   for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < filterArr.length; j++) {
-      if (arr[i] === filterArr[j]) {
-        result.push(arr[i]);
-      }
+    if (filterArr.includes(arr[i])) {
+      return arr[i];
     }
   }
   // console.log("result", result);
-  return result[0];
+  // return result[0];
 };
