@@ -13,6 +13,7 @@
 var evenOccurrence = function(arr) {
   // Your code here.
   let obj = {};
+  // occur 횟수
   arr.map(ele => {
     if (!obj[ele]) {
       obj[ele] = 1;
@@ -22,22 +23,22 @@ var evenOccurrence = function(arr) {
   });
 
   let filterArr = [];
+  // occur 횟수 짝수 필터링
   for (let key in obj) {
     if (obj[key] % 2 === 0) {
       if (!Number(key)) {
+        // 스트링이면 그대로 넣기
         filterArr.push(key);
       } else {
+        // 넘버면 넘버로 변환
         filterArr.push(Number(key));
       }
     }
   }
-  // console.log(filterArr);
-  // let result = [];
+  // 가장 먼저 나온 occur target 찾기
   for (let i = 0; i < arr.length; i++) {
     if (filterArr.includes(arr[i])) {
       return arr[i];
     }
   }
-  // console.log("result", result);
-  // return result[0];
 };
