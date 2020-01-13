@@ -29,30 +29,18 @@ var makeBoard = function(n) {
 };
 
 var robotPaths = function(n, board = makeBoard(n)) {
-  // 이건 아닌거 같음
+  // 최종 도착 인덱스 지정
   let destinationIdx = [n - 1, n - 1];
+
   let result = 0;
-  if (n === 1) {
-    return 1;
-  }
-  if (n === 2) {
-    return 2;
-  }
+
+  // 초기 시작 보드, 0,0 찍고 시작
   let initBoard = board;
   initBoard.togglePiece(0, 0);
 
   function recursion(size, recursionboard, curI = 0, curJ = 0) {
-    // debugger;
-
     let targetBoard = recursionboard;
-
-    // if (!targetBoard.togglePiece) {
-    // }
-    // console.log(targetBoard);
-    // console.log(result);
-    // 위,아래,왼,오 순서
     for (let i = 0; i < 4; i++) {
-      // console.log(targetBoard);
       // 위
       if (i === 0) {
         let temp = curI - 1;
@@ -60,14 +48,6 @@ var robotPaths = function(n, board = makeBoard(n)) {
           if (!targetBoard[temp][curJ]) {
             targetBoard[temp][curJ] = true;
             let newBoard = targetBoard.slice();
-            // newBoard.togglePiece = function(i, j) {
-            //   this[i][j] = !this[i][j];
-            // };
-            // newBoard.hasBeenVisited = function(i, j) {
-            //   return !!this[i][j];
-            // };
-            // let newI = temp;
-            // let newJ = curJ;
             recursion(size, newBoard, temp, curJ);
             targetBoard[temp][curJ] = false;
           }
@@ -83,14 +63,6 @@ var robotPaths = function(n, board = makeBoard(n)) {
             } else {
               targetBoard[temp][curJ] = true;
               let newBoard = targetBoard.slice();
-              // newBoard.togglePiece = function(i, j) {
-              //   this[i][j] = !this[i][j];
-              // };
-              // newBoard.hasBeenVisited = function(i, j) {
-              //   return !!this[i][j];
-              // };
-              // let newI = temp;
-              // let newJ = curJ;
               recursion(size, newBoard, temp, curJ);
               targetBoard[temp][curJ] = false;
             }
@@ -104,14 +76,6 @@ var robotPaths = function(n, board = makeBoard(n)) {
           if (!targetBoard[curI][temp]) {
             targetBoard[curI][temp] = true;
             let newBoard = targetBoard.slice();
-            // newBoard.togglePiece = function(i, j) {
-            //   this[i][j] = !this[i][j];
-            // };
-            // newBoard.hasBeenVisited = function(i, j) {
-            //   return !!this[i][j];
-            // };
-            // let newI = curI;
-            // let newJ = temp;
             recursion(size, newBoard, curI, temp);
             targetBoard[curI][temp] = false;
           }
@@ -127,14 +91,6 @@ var robotPaths = function(n, board = makeBoard(n)) {
             } else {
               targetBoard[curI][temp] = true;
               let newBoard = targetBoard.slice();
-              // newBoard.togglePiece = function(i, j) {
-              //   this[i][j] = !this[i][j];
-              // };
-              // newBoard.hasBeenVisited = function(i, j) {
-              //   return !!this[i][j];
-              // };
-              // let newI = curI;
-              // let newJ = temp;
               recursion(size, newBoard, curI, temp);
               targetBoard[curI][temp] = false;
             }
@@ -143,6 +99,9 @@ var robotPaths = function(n, board = makeBoard(n)) {
       }
     }
   }
+
+  // 리커젼 함수 실행
   recursion(n, initBoard);
+
   return result;
 };
