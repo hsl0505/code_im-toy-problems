@@ -39,15 +39,44 @@
 // It will transform an array of numbers into an array of valid objects.
 var testingTransform = function(array) {
   var transform = [];
-  
+
   for (var i = 0; i < array.length; i++)
-    transform.push({value: array[i], i: i});
+    transform.push({ value: array[i], i: i });
 
   return transform;
 };
 
-var insertionSort = function(array
-) {
+var insertionSort = function(array, callback) {
   // Your code goes here. Feel free to add helper functions if needed.
+  // 삽입정렬
+
+  if (callback) {
+    for (let i = 1; i < array.length; i++) {
+      for (let j = i - 1; j >= 0; j--) {
+        let compareTarget = array[j + 1];
+        // sort에서 콜백함수 결과가 -1이면 (음수) 앞이 크고, 1이면 뒤(양수)가 크다(오름차순)
+        // 이게 디폴트 (즉, a-b<0이면 정렬이 안일어나고, a-b>0이면 정렬이 일어남)
+        // a-b를 리턴하면 오름차순(디폴트), b-a를 리턴하면 내림차순 정렬(결과를 반대로)
+        // a-b>0 이면 정렬이 안일어나고, a-b<0이면 정렬이 일어아냐함
+        // 테스트는 내림차순(b-a)이므로 b-a>0일 때 정렬이 일어나도록 해야함!!
+        if (callback(array[j], compareTarget) > 0) {
+          let temp = array[j];
+          array[j] = compareTarget;
+          array[j + 1] = temp;
+        }
+      }
+    }
+  } else {
+    for (let i = 1; i < array.length; i++) {
+      for (let j = i - 1; j >= 0; j--) {
+        let compareTarget = array[j + 1]; // 비교타겟은 i와 같음
+        if (array[j].value > compareTarget.value) {
+          let temp = array[j];
+          array[j] = compareTarget;
+          array[j + 1] = temp;
+        }
+      }
+    }
+  }
   return array;
 };
