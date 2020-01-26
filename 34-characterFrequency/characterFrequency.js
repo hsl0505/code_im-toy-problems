@@ -56,7 +56,7 @@ var characterFrequency = function(string) {
     result.push(temp);
   }
 
-  // string count 순으로 sort, 동일한 count 시에는 알파벳 순서로 sort 시킴
+  // string count 순으로(내림차순) sort, 동일한 count 시에는 알파벳 순서로 sort 시킴
   let result2 = result.sort((a, b) => {
     if (b[1] - a[1] > 0) {
       return 1;
