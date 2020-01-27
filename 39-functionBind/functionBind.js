@@ -23,8 +23,13 @@
  *
  */
 
-var bind = function() {
+var bind = function(func, thisTarget, ...args) {
   // TODO: Your code here
+  // console.log(this);
+  return function(...args2) {
+    let temp = args.concat(args2);
+    return func.apply(thisTarget, temp);
+  };
 };
 
 /*
@@ -52,9 +57,15 @@ var bind = function() {
  *
  */
 
-Function.prototype.bind = function() {
+Function.prototype.bind = function(thisTarget, ...args) {
   // TODO: Your code here
-  return function() {
+  // 멍청아.....
+  // this의 실행 컨텍스트 잘생각하자...
+  // 클로저 펑션에서 this는 .. 다르지...
+  let bindFunc = this;
+  return function(...args2) {
     // TODO: Your code here, too
+    let temp = args.concat(args2);
+    return bindFunc.apply(thisTarget, temp);
   };
 };
